@@ -26,6 +26,12 @@ public class GestionLivreServiceImpl implements GestionLivreService{
     	Livres.add(livre);
     }
     
+    public boolean chercherLivre(String nom) {
+    	return Livres.stream()
+		       .filter(item -> item.getName().equals(nom))
+			   .findFirst().orElse(null) != null;
+    }
+    
 	public void modifierLivre(String name) {
 		boolean trouve = false;
 		if(Livres.size()==0) {

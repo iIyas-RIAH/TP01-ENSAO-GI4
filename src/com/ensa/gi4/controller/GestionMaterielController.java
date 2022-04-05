@@ -80,7 +80,8 @@ public class GestionMaterielController {
             }
         } else if("5".equals(next)) {
             System.out.println("1- pour supprimer un livre, entrer 1");
-            System.out.println("2- pour supprimer une chaise, entrer 2");        	Scanner scType = new Scanner(System.in);
+            System.out.println("2- pour supprimer une chaise, entrer 2");        	
+            Scanner scType = new Scanner(System.in);
             String type = scType.next();
         	System.out.print("Entrer le nom du materiel : ");
         	Scanner sc = new Scanner(System.in);

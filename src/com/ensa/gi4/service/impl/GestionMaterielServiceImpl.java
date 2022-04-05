@@ -1,6 +1,5 @@
 package com.ensa.gi4.service.impl;
 
-import java.util.List;
 import java.util.Scanner;
 
 import com.ensa.gi4.modele.Chaise;
@@ -10,13 +9,9 @@ import com.ensa.gi4.service.api.GestionMaterielService;
 
 
 public class GestionMaterielServiceImpl implements GestionMaterielService {
-    // bd goes here
-	private List<Livre> Livres;
-	private List<Chaise> Chaises;
-	
+    // bd goes here	
 	GestionLivreServiceImpl GLSI = new GestionLivreServiceImpl();
 	GestionChaiseServiceImpl GCSI = new GestionChaiseServiceImpl();
-
 	
 	public GestionMaterielServiceImpl() {
 		init();
@@ -49,12 +44,8 @@ public class GestionMaterielServiceImpl implements GestionMaterielService {
 
 	@Override
 	public void chercherMateriel(String name) {
-		boolean resultLivres = Livres.stream()
-					         .filter(item -> item.getName().equals(name))
-						   	 .findFirst().orElse(null) != null;
-		boolean resultChaises = Chaises.stream()
-			     .filter(item -> item.getName().equals(name))
-			     .findFirst().orElse(null) != null;
+		boolean resultLivres = GLSI.chercherLivre(name);
+		boolean resultChaises = GCSI.chercherChaise(name);
 		System.out.println(" Livre trouvé : "+ resultLivres +"\n Chaise trouvée : "+ resultChaises);
 	}
 

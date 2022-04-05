@@ -26,6 +26,12 @@ public class GestionChaiseServiceImpl implements GestionChaiseService{
 		Chaises.add(chaise);
     }
     
+    public boolean chercherChaise(String nom) {
+    	return Chaises.stream()
+			   .filter(item -> item.getName().equals(nom))
+			   .findFirst().orElse(null) != null;
+    }
+    
 	public void modifierChaise(String name) {
 		boolean trouve = false;
 		if(Chaises.size()==0) {
