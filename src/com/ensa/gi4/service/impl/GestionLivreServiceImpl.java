@@ -1,38 +1,44 @@
 package com.ensa.gi4.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+import com.ensa.gi4.datatabase.DAOFactory;
 import com.ensa.gi4.modele.Livre;
 import com.ensa.gi4.service.api.GestionLivreService;
 
 public class GestionLivreServiceImpl implements GestionLivreService{
 
-	private List<Livre> Livres;
-	
-	public void init() {
-        Livres = new ArrayList<>();
+    private DAOFactory daoFactory;
+
+    public GestionLivreServiceImpl(DAOFactory daoFactory){
+        this.daoFactory = daoFactory;
     }
-	
-	public int listerLivre() {
-		return Livres.size();
-	}
+    
+    @Override
+    public void init() {}
+
+    @Override
+    public void listerLivre() {}
 	
     public void ajouterNouveauLivre(String nom) {
+        List<Livre> Livres = daoFactory.getListLivres();
     	Livre livre = new Livre();
         livre.setName(nom);
     	Livres.add(livre);
+    	daoFactory.setListLivres(Livres);
     }
     
     public boolean chercherLivre(String nom) {
+        List<Livre> Livres = daoFactory.getListLivres();
     	return Livres.stream()
 		       .filter(item -> item.getName().equals(nom))
 			   .findFirst().orElse(null) != null;
     }
     
 	public void modifierLivre(String name) {
+        List<Livre> Livres = daoFactory.getListLivres();
 		boolean trouve = false;
 		if(Livres.size()==0) {
 			System.out.println("Pas de livres");
@@ -51,10 +57,12 @@ public class GestionLivreServiceImpl implements GestionLivreService{
 			if(trouve==false) {
 				System.out.println("Ce livre n'existe pas dans la collection");
 			}
-		}	
+		}
+    	daoFactory.setListLivres(Livres);
 	}
 
 	public void supprimerLivre(String name) {
+        List<Livre> Livres = daoFactory.getListLivres();
 		Livre livre = null;
 		if(Livres.size()==0) {
 			System.out.println("Pas de livres");
@@ -70,6 +78,7 @@ public class GestionLivreServiceImpl implements GestionLivreService{
 				Livres.remove(livre);
 			}
 		}
+    	daoFactory.setListLivres(Livres);
 	}
 
 }

@@ -4,12 +4,21 @@
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-    <bean id="gestionMaterielService" class="com.ensa.gi4.service.impl.GestionMaterielServiceImpl" scope="prototype"/>
+    <import resource="dao-factory.xml" />
 
-    <bean id="gestionLivreService" class="com.ensa.gi4.service.impl.GestionLivreServiceImpl" scope="prototype"/>
+    <bean id="gestionLivreService" class="com.ensa.gi4.service.impl.GestionLivreServiceImpl">
+        <constructor-arg ref="DaoFactory"/>
+    </bean>
 
-    <bean id="gestionChaiseService" class="com.ensa.gi4.service.impl.GestionChaiseServiceImpl" scope="prototype"/>
+    <bean id="gestionChaiseService" class="com.ensa.gi4.service.impl.GestionChaiseServiceImpl">
+        <constructor-arg ref="DaoFactory"/>
+    </bean>
 
+	<bean id="gestionMaterielService" class="com.ensa.gi4.service.impl.GestionMaterielServiceImpl">
+		<constructor-arg ref="DaoFactory"/>
+        <property name="gestionLivreService" ref="gestionLivreService"/>
+        <property name="gestionChaiseService" ref="gestionChaiseService"/>
+    </bean>
 
     <bean id="gestionMaterielController" class="com.ensa.gi4.controller.GestionMaterielController">
         <property name="gestionMaterielService" ref="gestionMaterielService"/>

@@ -5,34 +5,42 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+import com.ensa.gi4.datatabase.DAOFactory;
 import com.ensa.gi4.modele.Chaise;
+import com.ensa.gi4.modele.Livre;
 import com.ensa.gi4.service.api.GestionChaiseService;
 
 public class GestionChaiseServiceImpl implements GestionChaiseService{
 
-	private List<Chaise> Chaises;
-	
-	public void init() {
-    	Chaises = new ArrayList<>();
+    private DAOFactory daoFactory;
+
+    public GestionChaiseServiceImpl(DAOFactory daoFactory){
+        this.daoFactory = daoFactory;
     }
-	
-	public int listerChaise() {
-		return Chaises.size();
-	}
+    
+    @Override
+    public void init() {}
+
+    @Override
+    public void listerChaise() {}
 	
     public void ajouterNouveauChaise(String nom) {
+        List<Chaise> Chaises = daoFactory.getListChaises();
     	Chaise chaise = new Chaise();
     	chaise.setName(nom);
 		Chaises.add(chaise);
+    	daoFactory.setListChaises(Chaises);
     }
     
     public boolean chercherChaise(String nom) {
+        List<Chaise> Chaises = daoFactory.getListChaises();
     	return Chaises.stream()
 			   .filter(item -> item.getName().equals(nom))
 			   .findFirst().orElse(null) != null;
     }
     
 	public void modifierChaise(String name) {
+        List<Chaise> Chaises = daoFactory.getListChaises();
 		boolean trouve = false;
 		if(Chaises.size()==0) {
 			System.out.println("Pas de chaise");
@@ -52,9 +60,11 @@ public class GestionChaiseServiceImpl implements GestionChaiseService{
 				System.out.println("Cette chaise n'existe pas dans la collection");
 			}
 		}
+    	daoFactory.setListChaises(Chaises);
 	}
 
 	public void supprimerChaise(String name) {
+        List<Chaise> Chaises = daoFactory.getListChaises();
 		Chaise chaise = null;
 		if(Chaises.size()==0) {
 			System.out.println("Pas de chaise");
@@ -70,5 +80,6 @@ public class GestionChaiseServiceImpl implements GestionChaiseService{
 				Chaises.remove(chaise);
 			}
 		}
+    	daoFactory.setListChaises(Chaises);
 	}
 }

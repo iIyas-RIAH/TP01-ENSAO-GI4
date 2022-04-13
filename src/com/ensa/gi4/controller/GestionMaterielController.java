@@ -5,33 +5,11 @@ import com.ensa.gi4.modele.Livre;
 import com.ensa.gi4.modele.Materiel;
 import com.ensa.gi4.service.api.GestionMaterielService;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class GestionMaterielController {
 
     private GestionMaterielService gestionMaterielService;
-
-    public void listerMateriel() {
-        gestionMaterielService.listerMateriel();
-    }
-    
-    public void ajouterNouveauMateriel(Materiel materiel) {
-    	gestionMaterielService.ajouterNouveauMateriel(materiel);
-    }
-    
-    public void chercherMateriel(String name) {
-		gestionMaterielService.chercherMateriel(name);
-    }
-    
-    public void modifierMateriel(String name, String type) {
-    	gestionMaterielService.modifierMateriel(name, type);
-    } 
-    
-    public void supprimerMateriel(String name, String type) {
-    	gestionMaterielService.supprimerMateriel(name, type);
-    }
-   
 
     public void afficherMenu() {
         System.out.println("1- pour lister le materiel, entrer 1");
@@ -45,7 +23,7 @@ public class GestionMaterielController {
         if ("0".equals(next)) {
             sortirDeLApplication();
         } else if ("1".equals(next)) {
-            listerMateriel();
+        	gestionMaterielService.listerMateriel();
         } else if ("2".equals(next)) {
             System.out.println("1- pour ajouter un livre, entrer 1");
             System.out.println("2- pour ajouter une chaise, entrer 2");
@@ -54,27 +32,28 @@ public class GestionMaterielController {
             Materiel m;
             if("1".equals(materiel)) {
             	m = new Livre();
-            	ajouterNouveauMateriel(m);
+            	gestionMaterielService.ajouterNouveauMateriel(m);
             }else if("2".equals(materiel)) {
             	m = new Chaise();
-            	ajouterNouveauMateriel(m);
+            	gestionMaterielService.ajouterNouveauMateriel(m);
             }
         } else if("3".equals(next)) {
         	System.out.print("Entrer le nom du materiel : ");
         	Scanner sc = new Scanner(System.in);
             String name = sc.next();
-            chercherMateriel(name);
+            gestionMaterielService.chercherMateriel(name);
         } else if("4".equals(next)) {
         	System.out.println("1- pour modifier un livre, entrer 1");
-            System.out.println("2- pour modifier une chaise, entrer 2");        	Scanner scType = new Scanner(System.in);
+            System.out.println("2- pour modifier une chaise, entrer 2");        	
+            Scanner scType = new Scanner(System.in);
             String type = scType.next();
         	System.out.print("Entrer le nom du materiel : ");
         	Scanner sc = new Scanner(System.in);
             String name = sc.next();
             if("1".equals(type)) {
-            	modifierMateriel(name, "Livre");
+            	gestionMaterielService.modifierMateriel(name, "Livre");
             } else if("2".equals(type)) {
-            	modifierMateriel(name, "Chaise");
+            	gestionMaterielService.modifierMateriel(name, "Chaise");
             } else {
             	System.out.println("Choix invalide !!!");
             }
@@ -87,15 +66,16 @@ public class GestionMaterielController {
         	Scanner sc = new Scanner(System.in);
             String name = sc.next();
             if("1".equals(type)) {
-            	supprimerMateriel(name, "Livre");
+            	gestionMaterielService.supprimerMateriel(name, "Livre");
             } else if("2".equals(type)) {
-            	supprimerMateriel(name, "Chaise");
+            	gestionMaterielService.supprimerMateriel(name, "Chaise");
             } else {
             	System.out.println("Choix invalide !!!");
             }
         } else {
             System.out.println("Choix invalide !!!");
         }
+        System.out.println("------------------------------------------------------");
     }
 
 	private void sortirDeLApplication() {
