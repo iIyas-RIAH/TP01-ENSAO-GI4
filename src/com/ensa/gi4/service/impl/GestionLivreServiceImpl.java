@@ -4,24 +4,33 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 
-import com.ensa.gi4.datatabase.DAOFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import com.ensa.gi4.database.DAOFactory;
+import com.ensa.gi4.database.DAOFactoryImpl;
 import com.ensa.gi4.modele.Livre;
 import com.ensa.gi4.service.api.GestionLivreService;
 
+@Service
 public class GestionLivreServiceImpl implements GestionLivreService{
 
+	@Qualifier("DAOFactory")
     private DAOFactory daoFactory;
-
+    
+	@Autowired
     public GestionLivreServiceImpl(DAOFactory daoFactory){
         this.daoFactory = daoFactory;
     }
-    
+	
     @Override
     public void init() {}
 
     @Override
     public void listerLivre() {}
 	
+    @Override
     public void ajouterNouveauLivre(String nom) {
         List<Livre> Livres = daoFactory.getListLivres();
     	Livre livre = new Livre();
@@ -30,6 +39,7 @@ public class GestionLivreServiceImpl implements GestionLivreService{
     	daoFactory.setListLivres(Livres);
     }
     
+    @Override
     public boolean chercherLivre(String nom) {
         List<Livre> Livres = daoFactory.getListLivres();
     	return Livres.stream()
@@ -37,6 +47,7 @@ public class GestionLivreServiceImpl implements GestionLivreService{
 			   .findFirst().orElse(null) != null;
     }
     
+    @Override
 	public void modifierLivre(String name) {
         List<Livre> Livres = daoFactory.getListLivres();
 		boolean trouve = false;
@@ -61,6 +72,7 @@ public class GestionLivreServiceImpl implements GestionLivreService{
     	daoFactory.setListLivres(Livres);
 	}
 
+    @Override
 	public void supprimerLivre(String name) {
         List<Livre> Livres = daoFactory.getListLivres();
 		Livre livre = null;

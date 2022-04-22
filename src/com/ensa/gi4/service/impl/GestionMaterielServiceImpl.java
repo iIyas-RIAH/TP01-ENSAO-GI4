@@ -2,7 +2,12 @@ package com.ensa.gi4.service.impl;
 
 import java.util.Scanner;
 
-import com.ensa.gi4.datatabase.DAOFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import com.ensa.gi4.database.DAOFactory;
+import com.ensa.gi4.database.DAOFactoryImpl;
 import com.ensa.gi4.modele.Chaise;
 import com.ensa.gi4.modele.Livre;
 import com.ensa.gi4.modele.Materiel;
@@ -10,21 +15,24 @@ import com.ensa.gi4.service.api.GestionChaiseService;
 import com.ensa.gi4.service.api.GestionLivreService;
 import com.ensa.gi4.service.api.GestionMaterielService;
 
-
+@Service
 public class GestionMaterielServiceImpl implements GestionMaterielService {
 
+	@Qualifier("DAOFactory")
 	private DAOFactory daoFactory;
+	@Qualifier("LivreServiceBean")
     private GestionLivreService GLS;
+	@Qualifier("ChaiseServiceBean")
     private GestionChaiseService GCS;
 	
-    public GestionMaterielServiceImpl(DAOFactory daoFactory){
-        this.daoFactory = daoFactory;
-    	this.GLS = new GestionLivreServiceImpl(daoFactory);
-    	this.GCS = new GestionChaiseServiceImpl(daoFactory);
+	@Autowired
+	public GestionMaterielServiceImpl(DAOFactoryImpl daoFactoryImpl){
+        this.daoFactory = daoFactoryImpl;
     	init();
     }
 	
-    @Override
+
+	@Override
     public void init() {
         System.out.println("inititialisation du service");
     }
@@ -80,12 +88,5 @@ public class GestionMaterielServiceImpl implements GestionMaterielService {
 			GCS.supprimerChaise(name);
 		}
 	}
-	
-    public void setGestionLivreService(GestionLivreService gestionLivreService) {
-        this.GLS = gestionLivreService;
-    }
 
-    public void setGestionChaiseService(GestionChaiseService gestionChaiseService) {
-        this.GCS = gestionChaiseService;
-    }
 }

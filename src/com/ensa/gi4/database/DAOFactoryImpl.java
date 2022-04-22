@@ -1,24 +1,29 @@
-package com.ensa.gi4.datatabase;
+package com.ensa.gi4.database;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
+
 import com.ensa.gi4.modele.Chaise;
 import com.ensa.gi4.modele.Livre;
-import com.ensa.gi4.modele.Materiel;
 
-public class DAOFactory {
+@Repository
+public class DAOFactoryImpl implements DAOFactory {
 
 	private List<Livre> Livres = new ArrayList<>();
 	private List<Chaise> Chaises = new ArrayList<>();
 
-	public DAOFactory()
+	
+	public DAOFactoryImpl()
     {      
         Livre l1 = new Livre();
         l1.setName("livre1");
         Livre l2 = new Livre();
         l2.setName("livre2");
-        
+
         Chaise c1 = new Chaise();
         c1.setName("chaise1");
         Chaise c2 = new Chaise();
@@ -29,6 +34,7 @@ public class DAOFactory {
         Chaises.add(c1);
         Chaises.add(c2);
     }
+ 
 	
 	public List<Livre> getListLivres() {
 		return Livres;

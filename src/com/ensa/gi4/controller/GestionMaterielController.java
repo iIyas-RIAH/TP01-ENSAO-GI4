@@ -4,14 +4,28 @@ import com.ensa.gi4.modele.Chaise;
 import com.ensa.gi4.modele.Livre;
 import com.ensa.gi4.modele.Materiel;
 import com.ensa.gi4.service.api.GestionMaterielService;
+import com.ensa.gi4.service.impl.GestionMaterielServiceImpl;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+@Service
 public class GestionMaterielController {
 
     private GestionMaterielService gestionMaterielService;
 
-    public void afficherMenu() {
+    public GestionMaterielController() {}
+	
+    @Autowired
+	public GestionMaterielController(GestionMaterielService materielServiceBean) {
+        this.gestionMaterielService = materielServiceBean;
+    }
+
+
+	public void afficherMenu() {
         System.out.println("1- pour lister le materiel, entrer 1");
         System.out.println("2- pour ajouter un nouveau materiel, entrer 2");
         System.out.println("3- pour chercher un materiel, entrer 3");
@@ -81,9 +95,6 @@ public class GestionMaterielController {
 	private void sortirDeLApplication() {
         System.exit(0);
     }
+	
 
-    public void setGestionMaterielService(GestionMaterielService gestionMaterielService) {
-        // injection par accesseur
-        this.gestionMaterielService = gestionMaterielService;
-    }
 }

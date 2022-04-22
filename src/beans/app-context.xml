@@ -1,10 +1,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-		http://www.springframework.org/schema/beans 
-		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <import resource="dao-factory.xml" />
+	<context:annotation-config/>
+<!-- 
+	<import resource="dao-factory.xml" />
+
+	<import resource="listeners-context.xml" />
 
     <bean id="gestionLivreService" class="com.ensa.gi4.service.impl.GestionLivreServiceImpl">
         <constructor-arg ref="DaoFactory"/>
@@ -23,6 +29,5 @@
     <bean id="gestionMaterielController" class="com.ensa.gi4.controller.GestionMaterielController">
         <property name="gestionMaterielService" ref="gestionMaterielService"/>
     </bean>
-
-
+-->
 </beans>

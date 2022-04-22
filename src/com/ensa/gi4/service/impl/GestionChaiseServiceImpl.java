@@ -1,19 +1,26 @@
 package com.ensa.gi4.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 
-import com.ensa.gi4.datatabase.DAOFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import com.ensa.gi4.database.DAOFactory;
+import com.ensa.gi4.database.DAOFactoryImpl;
 import com.ensa.gi4.modele.Chaise;
-import com.ensa.gi4.modele.Livre;
 import com.ensa.gi4.service.api.GestionChaiseService;
 
+@Service
 public class GestionChaiseServiceImpl implements GestionChaiseService{
 
+	@Qualifier("DAOFactory")
     private DAOFactory daoFactory;
 
+	@Autowired
     public GestionChaiseServiceImpl(DAOFactory daoFactory){
         this.daoFactory = daoFactory;
     }
@@ -24,6 +31,7 @@ public class GestionChaiseServiceImpl implements GestionChaiseService{
     @Override
     public void listerChaise() {}
 	
+    @Override
     public void ajouterNouveauChaise(String nom) {
         List<Chaise> Chaises = daoFactory.getListChaises();
     	Chaise chaise = new Chaise();
@@ -32,6 +40,7 @@ public class GestionChaiseServiceImpl implements GestionChaiseService{
     	daoFactory.setListChaises(Chaises);
     }
     
+    @Override
     public boolean chercherChaise(String nom) {
         List<Chaise> Chaises = daoFactory.getListChaises();
     	return Chaises.stream()
@@ -39,6 +48,7 @@ public class GestionChaiseServiceImpl implements GestionChaiseService{
 			   .findFirst().orElse(null) != null;
     }
     
+    @Override
 	public void modifierChaise(String name) {
         List<Chaise> Chaises = daoFactory.getListChaises();
 		boolean trouve = false;
@@ -63,6 +73,7 @@ public class GestionChaiseServiceImpl implements GestionChaiseService{
     	daoFactory.setListChaises(Chaises);
 	}
 
+    @Override
 	public void supprimerChaise(String name) {
         List<Chaise> Chaises = daoFactory.getListChaises();
 		Chaise chaise = null;
